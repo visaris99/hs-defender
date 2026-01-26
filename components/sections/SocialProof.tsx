@@ -89,7 +89,7 @@ export default function SocialProof() {
   if (!currentMessage) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-navy-900/80 backdrop-blur-md border-b border-white/5">
+    <div className="fixed top-0 left-0 right-0 z-50 bg-[#0A192F]/90 backdrop-blur-lg border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 py-3">
         <AnimatePresence mode="wait">
           <motion.div
@@ -102,16 +102,16 @@ export default function SocialProof() {
           >
             {/* Notification dot */}
             <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-gold-500 opacity-75" />
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-gold-500" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-500 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-amber-500" />
             </span>
 
             {/* Message */}
             <span className="text-slate-300">
               방금{" "}
-              <span className="text-white font-medium">{currentMessage.name}</span>
+              <span className="text-slate-100 font-medium">{currentMessage.name}</span>
               님이{" "}
-              <span className="text-gold-500 font-semibold font-display">
+              <span className="gold-highlight font-display">
                 {currentMessage.amount}
               </span>{" "}
               {currentMessage.action}을 하셨습니다.

@@ -55,7 +55,7 @@ export default function USP() {
   };
 
   return (
-    <section className="py-24 px-4" id="usp">
+    <section className="py-20 md:py-32 px-4" id="usp">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -63,12 +63,12 @@ export default function USP() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-16 md:mb-20"
         >
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-6">
             왜 <span className="gradient-text">디펜더</span>인가요?
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-slate-400 max-w-2xl mx-auto leading-relaxed">
             고객님의 안전한 손실 복구를 위해 최적의 조건을 제공합니다.
           </p>
         </motion.div>
@@ -79,26 +79,26 @@ export default function USP() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
         >
           {uspData.map((item) => (
             <motion.div
               key={item.id}
               variants={itemVariants}
-              className="glass-card p-8 hover:bg-white/[0.08] transition-all duration-300 group"
+              className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-3xl p-8 md:p-10 hover:bg-white/[0.08] transition-all duration-300 group"
             >
               <div className="flex items-start gap-5">
                 {/* Icon */}
-                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-gold-500/20 to-gold-500/5 flex items-center justify-center text-gold-500 group-hover:scale-110 transition-transform duration-300">
+                <div className="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center text-amber-500 group-hover:scale-110 transition-transform duration-300">
                   {icons[item.icon as keyof typeof icons]}
                 </div>
 
                 {/* Content */}
                 <div className="flex-1">
-                  <span className="text-gold-500 text-sm font-display font-semibold tracking-wider">
+                  <span className="text-amber-500 text-sm font-display font-semibold tracking-wider">
                     {item.keyword}
                   </span>
-                  <h3 className="text-xl font-bold mt-1 mb-2">{item.title}</h3>
+                  <h3 className="text-xl font-semibold mt-1 mb-3 text-slate-100">{item.title}</h3>
                   <p className="text-slate-400 text-sm leading-relaxed">
                     {item.description}
                   </p>

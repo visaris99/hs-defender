@@ -69,7 +69,6 @@ export default function ConsultationForm() {
     setIsSubmitting(true);
 
     try {
-      // Firebase에 저장 (Firebase가 설정되어 있는 경우)
       if (db) {
         const applicationData: Omit<Application, "id"> = {
           name: formData.name,
@@ -82,13 +81,10 @@ export default function ConsultationForm() {
         await addDoc(collection(db, COLLECTIONS.APPLICATIONS), applicationData);
       }
 
-      // GTM 전환 이벤트 전송
       trackConsultationSubmit(formData.lossAmount);
-
       setIsCompleted(true);
     } catch (err) {
       console.error("Form submission error:", err);
-      // Firebase 에러가 발생해도 성공 처리 (GTM 이벤트는 전송됨)
       trackConsultationSubmit(formData.lossAmount);
       setIsCompleted(true);
     } finally {
@@ -111,7 +107,7 @@ export default function ConsultationForm() {
   };
 
   return (
-    <section className="py-24 px-4" id="consultation">
+    <section className="py-20 md:py-32 px-4" id="consultation">
       <div className="max-w-2xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -119,12 +115,12 @@ export default function ConsultationForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="text-2xl md:text-4xl font-bold mb-4">
+          <h2 className="text-2xl md:text-4xl font-extrabold mb-6">
             <span className="gradient-text">무료 상담</span> 신청
           </h2>
-          <p className="text-slate-400">
+          <p className="text-slate-400 leading-relaxed">
             간단한 정보만 입력하시면 전담 상담사가 연락드립니다.
           </p>
         </motion.div>
@@ -135,7 +131,7 @@ export default function ConsultationForm() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="glass-card p-8 md:p-12"
+          className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-3xl p-8 md:p-12"
         >
           <AnimatePresence mode="wait">
             {!isCompleted ? (
@@ -147,29 +143,29 @@ export default function ConsultationForm() {
                 transition={{ duration: 0.3 }}
               >
                 {/* Progress */}
-                <div className="flex items-center gap-2 mb-8">
+                <div className="flex items-center gap-2 mb-10">
                   {formSteps.map((_, index) => (
                     <div
                       key={index}
                       className={`h-1 flex-1 rounded-full transition-all duration-300 ${
-                        index <= currentStep ? "bg-gold-500" : "bg-navy-700"
+                        index <= currentStep ? "bg-amber-500" : "bg-white/10"
                       }`}
                     />
                   ))}
                 </div>
 
                 {/* Step indicator */}
-                <p className="text-gold-500 text-sm font-display font-semibold mb-2">
+                <p className="text-amber-500 text-sm font-display font-semibold mb-3">
                   STEP {currentStep + 1} / {formSteps.length}
                 </p>
 
                 {/* Question */}
-                <h3 className="text-xl md:text-2xl font-bold mb-8">
+                <h3 className="text-xl md:text-2xl font-semibold mb-10 text-slate-100">
                   {currentStepData.question}
                 </h3>
 
                 {/* Input */}
-                <div className="mb-6">
+                <div className="mb-8">
                   <input
                     type={currentStepData.type}
                     value={formData[currentStepData.field as keyof FormData]}
@@ -177,13 +173,13 @@ export default function ConsultationForm() {
                     onKeyPress={handleKeyPress}
                     placeholder={currentStepData.placeholder}
                     autoFocus
-                    className="w-full bg-transparent border-b-2 border-navy-700 focus:border-gold-500 text-xl py-3 outline-none transition-colors placeholder:text-slate-600"
+                    className="w-full bg-transparent border-b-2 border-white/20 focus:border-amber-500 text-xl py-3 outline-none transition-colors placeholder:text-slate-600 text-slate-100"
                   />
                   {error && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red-400 text-sm mt-2"
+                      className="text-red-400 text-sm mt-3"
                     >
                       {error}
                     </motion.p>
@@ -195,7 +191,7 @@ export default function ConsultationForm() {
                   <button
                     onClick={handleBack}
                     disabled={currentStep === 0}
-                    className={`flex items-center gap-2 text-slate-400 hover:text-white transition-colors ${
+                    className={`flex items-center gap-2 text-slate-400 hover:text-slate-100 transition-colors ${
                       currentStep === 0 ? "opacity-0 pointer-events-none" : ""
                     }`}
                   >
@@ -208,7 +204,7 @@ export default function ConsultationForm() {
                   <button
                     onClick={handleNext}
                     disabled={isSubmitting}
-                    className="flex items-center gap-2 bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 font-bold px-6 py-3 rounded-xl hover:from-gold-400 hover:to-gold-300 transition-all disabled:opacity-50"
+                    className="flex items-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold px-6 py-3 rounded-xl shadow-lg shadow-amber-500/20 transition-all disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <>
@@ -244,24 +240,24 @@ export default function ConsultationForm() {
                 className="text-center py-8"
               >
                 {/* Success icon */}
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-gold-500/20 to-gold-500/5 flex items-center justify-center">
-                  <svg className="w-10 h-10 text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-gradient-to-br from-amber-500/20 to-amber-500/5 flex items-center justify-center">
+                  <svg className="w-10 h-10 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
 
-                <h3 className="text-2xl font-bold mb-3">신청이 완료되었습니다!</h3>
-                <p className="text-slate-400 mb-4">
+                <h3 className="text-2xl font-semibold mb-4 text-slate-100">신청이 완료되었습니다!</h3>
+                <p className="text-slate-400 mb-4 leading-relaxed">
                   입력하신 연락처로 곧 상담사가 연락드릴 예정입니다.
                   <br />
                   빠른 상담을 원하시면 카카오톡으로 문의해주세요.
                 </p>
-                <div className="bg-navy-900/50 rounded-xl p-4 mb-6 text-left">
+                <div className="bg-[#0A192F]/50 rounded-xl p-4 mb-6 text-left">
                   <p className="text-slate-500 text-xs mb-2">복구 작업 안내</p>
                   <p className="text-slate-300 text-sm leading-relaxed">
-                    • 복구 작업 시작 후 <span className="text-gold-500 font-medium">6시간 ~ 2일</span> 내 1차 결과 안내
+                    • 복구 작업 시작 후 <span className="gold-highlight">6시간 ~ 2일</span> 내 1차 결과 안내
                     <br />
-                    • 손실 업체에 따라 <span className="text-gold-500 font-medium">1주일 ~ 1개월</span> 정도 소요
+                    • 손실 업체에 따라 <span className="gold-highlight">1주일 ~ 1개월</span> 정도 소요
                   </p>
                 </div>
 
