@@ -1,9 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useModal } from "@/contexts/ModalContext";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { openConsultation } = useModal();
 
   return (
     <footer className="py-16 md:py-20 px-4 border-t border-white/10 bg-[#0A192F]">
@@ -16,9 +19,11 @@ export default function Footer() {
         >
           {/* Logo / Brand */}
           <div className="text-center mb-10">
-            <h3 className="text-xl font-extrabold gradient-text mb-3">
-              해외선물 손실복구 디펜더
-            </h3>
+            <Link href="/">
+              <h3 className="text-xl font-extrabold gradient-text mb-3 hover:opacity-80 transition-opacity">
+                해외선물 손실복구 디펜더
+              </h3>
+            </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
               신뢰할 수 있는 손실 복구 파트너
             </p>
@@ -26,24 +31,24 @@ export default function Footer() {
 
           {/* Quick Links */}
           <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-10 text-sm">
-            <a
-              href="#usp"
+            <Link
+              href="/about"
               className="text-slate-400 hover:text-slate-100 transition-colors"
             >
-              서비스 강점
-            </a>
-            <a
-              href="#cases"
+              디펜더 소개
+            </Link>
+            <Link
+              href="/cases"
               className="text-slate-400 hover:text-slate-100 transition-colors"
             >
               복구 사례
-            </a>
-            <a
-              href="#consultation"
+            </Link>
+            <button
+              onClick={openConsultation}
               className="text-slate-400 hover:text-slate-100 transition-colors"
             >
               상담 신청
-            </a>
+            </button>
             <a
               href="http://pf.kakao.com/_kJDgG"
               target="_blank"

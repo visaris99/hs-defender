@@ -2,11 +2,14 @@
 
 import { motion } from "framer-motion";
 import { trackCTAClick } from "@/lib/gtm";
+import { useModal } from "@/contexts/ModalContext";
 
 export default function Hero() {
+  const { openConsultation } = useModal();
+
   const handleCTAClick = () => {
     trackCTAClick("hero_cta");
-    document.getElementById("consultation")?.scrollIntoView({ behavior: "smooth" });
+    openConsultation();
   };
 
   return (
@@ -103,7 +106,7 @@ export default function Hero() {
             onClick={handleCTAClick}
             className="breathing-btn bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold text-lg px-10 py-4 rounded-full shadow-lg shadow-amber-500/20 transition-all duration-300"
           >
-            내 계좌 진단받기
+            복구 작업 신청하기
           </button>
         </motion.div>
 

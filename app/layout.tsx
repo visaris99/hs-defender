@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { GoogleTagManager } from "@next/third-parties/google";
+import { ModalProvider } from "@/contexts/ModalContext";
+import ConsultationModal from "@/components/common/ConsultationModal";
 import "./globals.css";
 
 // GTM ID - 환경 변수에서 가져오기 (없으면 빈 문자열)
@@ -153,7 +155,10 @@ export default function RootLayout({
         {/* Google Tag Manager */}
         {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
 
-        {children}
+        <ModalProvider>
+          {children}
+          <ConsultationModal />
+        </ModalProvider>
       </body>
     </html>
   );

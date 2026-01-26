@@ -1,11 +1,9 @@
 import Hero from "@/components/sections/Hero";
 import SocialProof from "@/components/sections/SocialProof";
-import USP from "@/components/sections/USP";
-import SuccessCases from "@/components/sections/SuccessCases";
-import ConsultationForm from "@/components/sections/ConsultationForm";
 import Footer from "@/components/sections/Footer";
 import StickyCTA from "@/components/common/StickyCTA";
 import ScrollToTop from "@/components/common/ScrollToTop";
+import QuickLinks from "@/components/sections/QuickLinks";
 
 export default function Home() {
   return (
@@ -21,14 +19,8 @@ export default function Home() {
         <Hero />
       </div>
 
-      {/* USP Section */}
-      <USP />
-
-      {/* Success Cases Section */}
-      <SuccessCases />
-
-      {/* Consultation Form Section */}
-      <ConsultationForm />
+      {/* Quick Links to other pages */}
+      <QuickLinks />
 
       {/* Footer */}
       <div className="pb-24"> {/* Padding for sticky CTA */}
