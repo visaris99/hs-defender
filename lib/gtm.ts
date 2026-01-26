@@ -1,11 +1,5 @@
 // Google Tag Manager Event Helper
 
-declare global {
-  interface Window {
-    dataLayer: Record<string, unknown>[];
-  }
-}
-
 type GTMEventParams = {
   event: string;
   [key: string]: unknown;
@@ -17,12 +11,15 @@ type GTMEventParams = {
  * @param params - 추가 파라미터
  */
 export const sendGTMEvent = (eventName: string, params?: Record<string, unknown>) => {
-  if (typeof window !== "undefined" && window.dataLayer) {
-    const eventData: GTMEventParams = {
-      event: eventName,
-      ...params,
-    };
-    window.dataLayer.push(eventData);
+  if (typeof window !== "undefined") {
+    const dataLayer = (window as unknown as { dataLayer?: GTMEventParams[] }).dataLayer;
+    if (dataLayer) {
+      const eventData: GTMEventParams = {
+        event: eventName,
+        ...params,
+      };
+      dataLayer.push(eventData);
+    }
   }
 };
 
