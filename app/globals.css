@@ -1,26 +1,110 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/* Design System - Custom Theme */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors - Deep Navy & Gold */
+  --color-navy-950: #0A192F;
+  --color-navy-900: #112240;
+  --color-navy-800: #1D3461;
+  --color-navy-700: #233554;
+
+  --color-gold-500: #D4AF37;
+  --color-gold-400: #F0D78C;
+  --color-gold-300: #FFE5A0;
+
+  --color-slate-400: #8892B0;
+  --color-slate-300: #A8B2D1;
+  --color-slate-200: #CCD6F6;
+
+  /* Background & Foreground */
+  --color-background: #0A192F;
+  --color-foreground: #E6F1FF;
+
+  /* Glassmorphism */
+  --color-glass: rgba(255, 255, 255, 0.05);
+  --color-glass-border: rgba(255, 255, 255, 0.1);
+
+  /* Font Family */
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+  --font-display: "Montserrat", sans-serif;
+
+  /* Border Radius */
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+  --radius-3xl: 48px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Montserrat for numbers and emphasis */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Glassmorphism Card */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(135deg, #D4AF37 0%, #FFE5A0 50%, #D4AF37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Breathing Animation for CTA */
+@keyframes breathing {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.6);
+    transform: scale(1.02);
+  }
+}
+
+.breathing-btn {
+  animation: breathing 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-navy-950);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-navy-700);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-slate-400);
+}
+
+/* Selection */
+::selection {
+  background: rgba(212, 175, 55, 0.3);
+  color: #fff;
 }
