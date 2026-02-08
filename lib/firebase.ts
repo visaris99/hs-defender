@@ -1,6 +1,9 @@
 import { initializeApp, getApps, FirebaseApp } from "firebase/app";
 import { getFirestore, Firestore } from "firebase/firestore";
 
+// 타입은 types 폴더에서 re-export
+export type { Application, SuccessCase } from "@/types";
+
 // Firebase 설정 (환경 변수에서 가져오기)
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -34,27 +37,3 @@ export const COLLECTIONS = {
   APPLICATIONS: "applications",
   SUCCESS_CASES: "success_cases",
 } as const;
-
-// 타입 정의
-export interface Application {
-  id?: string;
-  name: string;
-  phone: string;
-  lossAmount: string;
-  createdAt: Date;
-  source?: string;
-  utmSource?: string;
-  utmMedium?: string;
-  utmCampaign?: string;
-}
-
-export interface SuccessCase {
-  id: string;
-  title: string;
-  amount: number;
-  period: string;
-  thumbnail: string;
-  detailImages: string[];
-  description?: string;
-  createdAt: Date;
-}

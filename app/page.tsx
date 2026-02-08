@@ -1,34 +1,23 @@
 import Hero from "@/components/sections/Hero";
-import SocialProof from "@/components/sections/SocialProof";
-import Footer from "@/components/sections/Footer";
-import StickyCTA from "@/components/common/StickyCTA";
-import ScrollToTop from "@/components/common/ScrollToTop";
+import USP from "@/components/sections/USP";
+import SuccessCases from "@/components/sections/SuccessCases";
 import QuickLinks from "@/components/sections/QuickLinks";
+import PageLayout from "@/components/layout/PageLayout";
 
 export default function Home() {
   return (
-    <main className="relative">
-      {/* Scroll to top on page load */}
-      <ScrollToTop />
-
-      {/* Social Proof Ticker - Fixed at top */}
-      <SocialProof />
-
+    <PageLayout>
       {/* Hero Section */}
-      <div className="pt-14"> {/* Padding for fixed ticker */}
-        <Hero />
-      </div>
+      <Hero />
+
+      {/* USP Section - 왜 디펜더인가? */}
+      <USP />
+
+      {/* Success Cases Section - 실제 복구 사례 */}
+      <SuccessCases />
 
       {/* Quick Links to other pages */}
       <QuickLinks />
-
-      {/* Footer */}
-      <div className="pb-24"> {/* Padding for sticky CTA */}
-        <Footer />
-      </div>
-
-      {/* Sticky CTA - Fixed at bottom */}
-      <StickyCTA />
-    </main>
+    </PageLayout>
   );
 }

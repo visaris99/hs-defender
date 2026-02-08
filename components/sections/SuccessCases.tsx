@@ -4,10 +4,13 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { successCasesMock } from "@/data/mockData";
 import { trackSuccessCaseView } from "@/lib/gtm";
-import { SuccessCase } from "@/lib/firebase";
+import { useModal } from "@/contexts/ModalContext";
+import { CloseIcon } from "@/components/icons";
+import type { SuccessCase } from "@/types";
 
 export default function SuccessCases() {
   const [selectedCase, setSelectedCase] = useState<SuccessCase | null>(null);
+  const { openConsultation } = useModal();
 
   const handleCaseClick = (caseItem: SuccessCase) => {
     setSelectedCase(caseItem);
@@ -16,6 +19,10 @@ export default function SuccessCases() {
 
   const formatAmount = (amount: number) => {
     return new Intl.NumberFormat("ko-KR").format(amount);
+  };
+
+  const profitRate = (deposit: number, profit: number) => {
+    return Math.round((profit / deposit) * 100);
   };
 
   return (
@@ -50,27 +57,33 @@ export default function SuccessCases() {
               className="cursor-pointer group"
             >
               <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-2xl overflow-hidden hover:border-amber-500/30 transition-all duration-300">
-                {/* Thumbnail placeholder */}
-                <div className="aspect-[3/4] bg-gradient-to-br from-[#112240] to-[#0A192F] relative overflow-hidden">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-amber-500/10 flex items-center justify-center">
-                        <svg className="w-8 h-8 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                      </div>
-                      <p className="gold-highlight font-display text-lg">
-                        {formatAmount(caseItem.amount)}원
-                      </p>
-                      <p className="text-slate-400 text-xs mt-1">
-                        {caseItem.period} 소요
-                      </p>
-                    </div>
+                {/* Thumbnail */}
+                <div className="aspect-[3/4] relative overflow-hidden">
+                  <img
+                    src={caseItem.image}
+                    alt={caseItem.title}
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                  {/* Profit badge */}
+                  <div className="absolute top-3 right-3 bg-amber-500/90 text-black text-xs font-bold px-2 py-1 rounded-lg">
+                    +{profitRate(caseItem.deposit, caseItem.profit)}%
+                  </div>
+
+                  {/* Bottom info */}
+                  <div className="absolute bottom-3 left-3 right-3">
+                    <p className="gold-highlight font-display text-lg font-bold">
+                      +{formatAmount(caseItem.profit * 10000)}원
+                    </p>
+                    <p className="text-slate-300 text-xs mt-0.5">
+                      {caseItem.deposit}만 → {formatAmount(caseItem.withdrawal)}만 · {caseItem.period}
+                    </p>
                   </div>
 
                   {/* Hover overlay */}
                   <div className="absolute inset-0 bg-amber-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                    <span className="text-slate-100 text-sm font-medium">자세히 보기</span>
+                    <span className="text-slate-100 text-sm font-medium bg-black/30 px-4 py-2 rounded-lg">자세히 보기</span>
                   </div>
                 </div>
 
@@ -109,7 +122,7 @@ export default function SuccessCases() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-3xl max-w-lg w-full max-h-[80vh] overflow-y-auto"
+              className="bg-[#0A192F] border border-white/10 shadow-2xl rounded-3xl max-w-lg w-full max-h-[80vh] overflow-y-auto"
             >
               {/* Modal Header */}
               <div className="p-6 border-b border-white/10">
@@ -124,9 +137,7 @@ export default function SuccessCases() {
                     onClick={() => setSelectedCase(null)}
                     className="text-slate-400 hover:text-slate-100 transition-colors p-1"
                   >
-                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <CloseIcon className="w-6 h-6" />
                   </button>
                 </div>
               </div>
@@ -134,19 +145,31 @@ export default function SuccessCases() {
               {/* Modal Content */}
               <div className="p-6">
                 {/* Stats */}
-                <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-[#0A192F]/50 rounded-2xl p-4 text-center">
-                    <p className="text-slate-400 text-sm mb-1">복구 금액</p>
-                    <p className="gold-highlight font-display text-xl">
-                      {formatAmount(selectedCase.amount)}원
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
+                    <p className="text-slate-400 text-xs mb-1">입금액</p>
+                    <p className="text-slate-100 font-display font-semibold text-lg">
+                      {selectedCase.deposit}만
                     </p>
                   </div>
-                  <div className="bg-[#0A192F]/50 rounded-2xl p-4 text-center">
-                    <p className="text-slate-400 text-sm mb-1">소요 기간</p>
-                    <p className="text-slate-100 font-display font-semibold text-xl">
-                      {selectedCase.period}
+                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
+                    <p className="text-slate-400 text-xs mb-1">출금액</p>
+                    <p className="gold-highlight font-display text-lg">
+                      {formatAmount(selectedCase.withdrawal)}만
                     </p>
                   </div>
+                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
+                    <p className="text-slate-400 text-xs mb-1">수익률</p>
+                    <p className="text-emerald-400 font-display font-semibold text-lg">
+                      +{profitRate(selectedCase.deposit, selectedCase.profit)}%
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-4 mb-6 text-sm text-slate-400">
+                  <span>수익 <strong className="text-slate-100">{formatAmount(selectedCase.profit)}만원</strong></span>
+                  <span>·</span>
+                  <span>소요 기간 <strong className="text-slate-100">{selectedCase.period}</strong></span>
                 </div>
 
                 {/* Description */}
@@ -154,23 +177,15 @@ export default function SuccessCases() {
                   {selectedCase.description}
                 </p>
 
-                {/* Placeholder for detail images */}
+                {/* 인증 이미지 */}
                 <div className="space-y-3">
                   <p className="text-slate-500 text-sm">인증 자료</p>
-                  <div className="grid grid-cols-2 gap-3">
-                    {[1, 2].map((i) => (
-                      <div
-                        key={i}
-                        className="aspect-square bg-[#112240] rounded-xl flex items-center justify-center"
-                      >
-                        <div className="text-center text-slate-500">
-                          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                          </svg>
-                          <span className="text-xs">이미지 {i}</span>
-                        </div>
-                      </div>
-                    ))}
+                  <div className="rounded-xl overflow-hidden">
+                    <img
+                      src={selectedCase.image}
+                      alt={`${selectedCase.title} 인증`}
+                      className="w-full object-cover"
+                    />
                   </div>
                 </div>
               </div>
@@ -180,7 +195,7 @@ export default function SuccessCases() {
                 <button
                   onClick={() => {
                     setSelectedCase(null);
-                    document.getElementById("consultation")?.scrollIntoView({ behavior: "smooth" });
+                    openConsultation();
                   }}
                   className="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold py-3 rounded-xl shadow-lg shadow-amber-500/20 transition-all"
                 >

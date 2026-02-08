@@ -19,42 +19,20 @@ export default function Hero() {
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20 md:py-32"
     >
-      {/* Animated Background - Graph Lines */}
+      {/* Video Background */}
       <div className="absolute inset-0 overflow-hidden">
-        <svg
-          className="absolute w-full h-full opacity-10"
-          viewBox="0 0 1200 800"
-          preserveAspectRatio="xMidYMid slice"
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
         >
-          {[...Array(5)].map((_, i) => (
-            <motion.path
-              key={i}
-              d={`M0 ${400 + i * 50} Q300 ${350 + i * 30} 600 ${400 + i * 40} T1200 ${380 + i * 35}`}
-              stroke="url(#goldGradient)"
-              strokeWidth="1"
-              fill="none"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ pathLength: 1, opacity: 0.3 }}
-              transition={{
-                duration: 3,
-                delay: 1 + i * 0.5,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
-              }}
-            />
-          ))}
-          <defs>
-            <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#f59e0b" stopOpacity="0" />
-              <stop offset="50%" stopColor="#f59e0b" stopOpacity="1" />
-              <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
-            </linearGradient>
-          </defs>
-        </svg>
+          <source src="/video/defender_bg_1.mp4" type="video/mp4" />
+        </video>
 
         {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/50 via-transparent to-[#0A192F]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/70 via-[#0A192F]/50 to-[#0A192F]" />
       </div>
 
       {/* Content */}
