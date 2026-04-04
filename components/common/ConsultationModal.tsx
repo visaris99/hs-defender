@@ -4,8 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formSteps } from "@/data/mockData";
 import { trackConsultationSubmit, trackFormStep } from "@/lib/gtm";
-import { db, COLLECTIONS, Application } from "@/lib/firebase";
-import { collection, addDoc, Timestamp } from "firebase/firestore";
+import { supabase, TABLES, Application } from "@/lib/supabase";
 import { useModal } from "@/contexts/ModalContext";
 
 interface FormData {
@@ -95,16 +94,20 @@ export default function ConsultationModal() {
     setIsSubmitting(true);
 
     try {
-      if (db) {
-        const applicationData: Omit<Application, "id"> = {
+      if (supabase) {
+        const applicationData = {
           name: formData.name,
           phone: formData.phone,
-          lossAmount: formData.lossAmount,
-          createdAt: Timestamp.now() as unknown as Date,
+          loss_amount: formData.lossAmount,
+          created_at: new Date().toISOString(),
           source: typeof window !== "undefined" ? window.location.href : "",
         };
 
-        await addDoc(collection(db, COLLECTIONS.APPLICATIONS), applicationData);
+        const { error: insertError } = await supabase
+          .from(TABLES.APPLICATIONS)
+          .insert(applicationData);
+
+        if (insertError) throw insertError;
       }
 
       trackConsultationSubmit(formData.lossAmount);

@@ -1,4 +1,4 @@
-// Firebase 관련 타입
+// Supabase 관련 타입
 export interface Application {
   id?: string;
   name: string;

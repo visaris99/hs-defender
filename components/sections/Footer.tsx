@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { useModal } from "@/contexts/ModalContext";
 
 export default function Footer() {
@@ -19,10 +20,15 @@ export default function Footer() {
         >
           {/* Logo / Brand */}
           <div className="text-center mb-10">
-            <Link href="/">
-              <h3 className="text-xl font-extrabold gradient-text mb-3 hover:opacity-80 transition-opacity">
-                해외선물 손실복구 디펜더
-              </h3>
+            <Link href="/" className="inline-block hover:opacity-80 transition-opacity">
+              <Image
+                src="/image/defender_logo_leftright.png"
+                alt="해외선물 손실복구 디펜더"
+                width={220}
+                height={48}
+                className="mx-auto mb-3"
+                priority={false}
+              />
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
               신뢰할 수 있는 손실 복구 파트너

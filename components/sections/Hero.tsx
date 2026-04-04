@@ -1,11 +1,38 @@
 "use client";
 
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { trackCTAClick } from "@/lib/gtm";
 import { useModal } from "@/contexts/ModalContext";
 
+const HERO_VIDEOS = [
+  "/video/defender_bg_1.mp4",
+  "/video/defender_Abstract_Dark_Background.mp4",
+  "/video/defender_Abstract_Growth_Animation.mp4",
+];
+
+const DEFAULT_VIDEO = HERO_VIDEOS[0];
+
 export default function Hero() {
   const { openConsultation } = useModal();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [selectedVideo, setSelectedVideo] = useState(DEFAULT_VIDEO);
+
+  // Select random video on client only (avoids hydration mismatch)
+  useEffect(() => {
+    setSelectedVideo(HERO_VIDEOS[Math.floor(Math.random() * HERO_VIDEOS.length)]);
+  }, []);
+
+  // Ensure autoplay works — React doesn't always set muted as a DOM property
+  useEffect(() => {
+    const video = videoRef.current;
+    if (video) {
+      video.muted = true;
+      video.playsInline = true;
+      video.load();
+      video.play().catch(() => {});
+    }
+  }, [selectedVideo]);
 
   const handleCTAClick = () => {
     trackCTAClick("hero_cta");
@@ -19,16 +46,19 @@ export default function Hero() {
       transition={{ duration: 1, ease: "easeOut" }}
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20 md:py-32"
     >
-      {/* Video Background */}
+      {/* Video Background — randomly selected from available videos */}
       <div className="absolute inset-0 overflow-hidden">
         <video
+          ref={videoRef}
+          key={selectedVideo}
           autoPlay
           loop
           muted
           playsInline
+          poster="/image/hero_poster.jpg"
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/video/defender_bg_1.mp4" type="video/mp4" />
+          <source src={selectedVideo} type="video/mp4" />
         </video>
 
         {/* Gradient Overlay */}

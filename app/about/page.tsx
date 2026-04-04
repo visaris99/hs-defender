@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { uspData } from "@/data/mockData";
 import { useModal } from "@/contexts/ModalContext";
 import { trackCTAClick } from "@/lib/gtm";
@@ -59,6 +60,15 @@ export default function AboutPage() {
               <span>/</span>
               <span className="text-slate-300">디펜더 소개</span>
             </div>
+
+            <Image
+              src="/image/defender_logo_updown.png"
+              alt="디펜더 로고"
+              width={120}
+              height={120}
+              className="mx-auto mb-6"
+              priority
+            />
 
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
               왜 <span className="gradient-text">디펜더</span>인가요?
