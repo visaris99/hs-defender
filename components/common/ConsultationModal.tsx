@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { formSteps } from "@/data/mockData";
 import { trackConsultationSubmit, trackFormStep } from "@/lib/gtm";
-import { supabase, TABLES, Application } from "@/lib/supabase";
+import { supabase, TABLES } from "@/lib/supabase";
 import { useModal } from "@/contexts/ModalContext";
+import { externalLinks } from "@/data/mockData";
 
 interface FormData {
   name: string;
@@ -121,7 +122,7 @@ export default function ConsultationModal() {
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
       handleNext();
@@ -212,7 +213,7 @@ export default function ConsultationModal() {
                         type={currentStepData.type}
                         value={formData[currentStepData.field as keyof FormData]}
                         onChange={(e) => handleInputChange(e.target.value)}
-                        onKeyPress={handleKeyPress}
+                        onKeyDown={handleKeyDown}
                         placeholder={currentStepData.placeholder}
                         autoFocus
                         className="w-full bg-transparent border-b-2 border-white/20 focus:border-amber-500 text-xl py-3 outline-none transition-colors placeholder:text-slate-600 text-slate-100"
@@ -304,7 +305,7 @@ export default function ConsultationModal() {
                     </div>
 
                     <a
-                      href="http://pf.kakao.com/_kJDgG"
+                      href={externalLinks.kakaoChannel}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-6 py-3 rounded-xl hover:bg-[#FDD835] transition-all"

@@ -70,15 +70,7 @@ p {
 }
 
 /* Gradient Text - Gold */
-.gradient-text {
-  background: linear-gradient(to right, #fde68a, #eab308);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-}
-
-/* Gold Highlight Text */
+.gradient-text,
 .gold-highlight {
   background: linear-gradient(to right, #fde68a, #eab308);
   -webkit-background-clip: text;

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useModal } from "@/contexts/ModalContext";
+import { externalLinks } from "@/data/mockData";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -56,7 +57,7 @@ export default function Footer() {
               상담 신청
             </button>
             <a
-              href="http://pf.kakao.com/_kJDgG"
+              href={externalLinks.kakaoChannel}
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-400 hover:text-slate-100 transition-colors"

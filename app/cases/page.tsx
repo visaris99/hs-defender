@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { successCasesMock } from "@/data/mockData";
 import { trackSuccessCaseView, trackCTAClick } from "@/lib/gtm";
 import { useModal } from "@/contexts/ModalContext";
-import { CloseIcon } from "@/components/icons";
+import CaseDetailModal from "@/components/common/CaseDetailModal";
 import PageLayout from "@/components/layout/PageLayout";
 import type { SuccessCase } from "@/types";
 
@@ -79,10 +80,12 @@ export default function CasesPage() {
                 <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-2xl overflow-hidden hover:border-amber-500/30 hover:shadow-amber-500/10 transition-all duration-300">
                   {/* Thumbnail */}
                   <div className="aspect-[3/4] relative overflow-hidden">
-                    <img
+                    <Image
                       src={caseItem.image}
                       alt={caseItem.title}
-                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
@@ -185,104 +188,14 @@ export default function CasesPage() {
       </section>
 
       {/* Case Detail Modal */}
-      <AnimatePresence>
-        {selectedCase && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedCase(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="bg-[#0A192F] border border-white/10 shadow-2xl rounded-3xl max-w-lg w-full max-h-[80vh] overflow-y-auto"
-            >
-              {/* Modal Header */}
-              <div className="p-6 border-b border-white/10">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <span className="text-amber-500 text-sm font-display font-semibold">
-                      복구 작업 완료
-                    </span>
-                    <h3 className="text-xl font-semibold mt-1 text-slate-100">{selectedCase.title}</h3>
-                  </div>
-                  <button
-                    onClick={() => setSelectedCase(null)}
-                    className="text-slate-400 hover:text-slate-100 transition-colors p-1"
-                  >
-                    <CloseIcon className="w-6 h-6" />
-                  </button>
-                </div>
-              </div>
-
-              {/* Modal Content */}
-              <div className="p-6">
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
-                    <p className="text-slate-400 text-xs mb-1">입금액</p>
-                    <p className="text-slate-100 font-display font-semibold text-lg">
-                      {selectedCase.deposit}만
-                    </p>
-                  </div>
-                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
-                    <p className="text-slate-400 text-xs mb-1">출금액</p>
-                    <p className="gold-highlight font-display text-lg">
-                      {formatAmount(selectedCase.withdrawal)}만
-                    </p>
-                  </div>
-                  <div className="bg-[#112240] rounded-2xl p-4 text-center">
-                    <p className="text-slate-400 text-xs mb-1">수익률</p>
-                    <p className="text-emerald-400 font-display font-semibold text-lg">
-                      +{profitRate(selectedCase.deposit, selectedCase.profit)}%
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-4 mb-6 text-sm text-slate-400">
-                  <span>수익 <strong className="text-slate-100">{formatAmount(selectedCase.profit)}만원</strong></span>
-                  <span>·</span>
-                  <span>소요 기간 <strong className="text-slate-100">{selectedCase.period}</strong></span>
-                </div>
-
-                {/* Description */}
-                <p className="text-slate-300 leading-relaxed mb-6">
-                  {selectedCase.description}
-                </p>
-
-                {/* 인증 이미지 */}
-                <div className="space-y-3">
-                  <p className="text-slate-500 text-sm">인증 자료</p>
-                  <div className="rounded-xl overflow-hidden">
-                    <img
-                      src={selectedCase.image}
-                      alt={`${selectedCase.title} 인증`}
-                      className="w-full object-cover"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Modal Footer */}
-              <div className="p-6 border-t border-white/10">
-                <button
-                  onClick={() => {
-                    setSelectedCase(null);
-                    openConsultation();
-                  }}
-                  className="w-full bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold py-3 rounded-xl shadow-lg shadow-amber-500/20 transition-all"
-                >
-                  나도 복구 작업 신청하기
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <CaseDetailModal
+        selectedCase={selectedCase}
+        onClose={() => setSelectedCase(null)}
+        onConsult={() => {
+          setSelectedCase(null);
+          openConsultation();
+        }}
+      />
     </PageLayout>
   );
 }

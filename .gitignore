@@ -44,3 +44,6 @@ SPEC.md
 # Auto-generated sitemap
 public/robots.txt
 public/sitemap*.xml
+
+# Project-unrelated files
+nanobanana2-prompts.md
