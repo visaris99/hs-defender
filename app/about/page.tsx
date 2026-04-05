@@ -9,6 +9,7 @@ import { uspData } from "@/data/mockData";
 import { useModal } from "@/contexts/ModalContext";
 import { trackCTAClick } from "@/lib/gtm";
 import { iconMap } from "@/components/icons";
+import Breadcrumb from "@/components/common/Breadcrumb";
 import PageLayout from "@/components/layout/PageLayout";
 
 export default function AboutPage() {
@@ -54,12 +55,12 @@ export default function AboutPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-8"
           >
-            {/* Breadcrumb */}
-            <div className="flex items-center justify-center gap-2 text-sm text-slate-500 mb-8">
-              <Link href="/" className="hover:text-slate-300 transition-colors">홈</Link>
-              <span>/</span>
-              <span className="text-slate-300">디펜더 소개</span>
-            </div>
+            <Breadcrumb
+              items={[
+                { name: "홈", href: "/" },
+                { name: "디펜더 소개" },
+              ]}
+            />
 
             <Image
               src="/image/defender_logo_updown.png"

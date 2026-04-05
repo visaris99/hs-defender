@@ -1,24 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { successCasesMock } from "@/data/mockData";
-import { trackSuccessCaseView, trackCTAClick } from "@/lib/gtm";
+import { trackCTAClick } from "@/lib/gtm";
 import { useModal } from "@/contexts/ModalContext";
-import CaseDetailModal from "@/components/common/CaseDetailModal";
+import Breadcrumb from "@/components/common/Breadcrumb";
 import PageLayout from "@/components/layout/PageLayout";
-import type { SuccessCase } from "@/types";
 
 export default function CasesPage() {
-  const [selectedCase, setSelectedCase] = useState<SuccessCase | null>(null);
   const { openConsultation } = useModal();
-
-  const handleCaseClick = (caseItem: SuccessCase) => {
-    setSelectedCase(caseItem);
-    trackSuccessCaseView(caseItem.id, caseItem.title);
-  };
 
   const handleCTAClick = () => {
     trackCTAClick("cases_cta");
@@ -44,12 +36,12 @@ export default function CasesPage() {
             transition={{ duration: 0.8 }}
             className="text-center mb-8"
           >
-            {/* Breadcrumb */}
-            <div className="flex items-center justify-center gap-2 text-sm text-slate-500 mb-8">
-              <Link href="/" className="hover:text-slate-300 transition-colors">홈</Link>
-              <span>/</span>
-              <span className="text-slate-300">복구 사례</span>
-            </div>
+            <Breadcrumb
+              items={[
+                { name: "홈", href: "/" },
+                { name: "복구 사례" },
+              ]}
+            />
 
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6">
               실제 <span className="gradient-text">복구 사례</span>
@@ -74,9 +66,8 @@ export default function CasesPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.05 }}
-                onClick={() => handleCaseClick(caseItem)}
-                className="cursor-pointer group"
               >
+              <Link href={`/cases/${caseItem.id}`} className="block group">
                 <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-2xl overflow-hidden hover:border-amber-500/30 hover:shadow-amber-500/10 transition-all duration-300">
                   {/* Thumbnail */}
                   <div className="aspect-[3/4] relative overflow-hidden">
@@ -115,6 +106,7 @@ export default function CasesPage() {
                     <h3 className="text-sm md:text-base font-medium text-slate-100 truncate">{caseItem.title}</h3>
                   </div>
                 </div>
+              </Link>
               </motion.div>
             ))}
           </div>
@@ -187,15 +179,6 @@ export default function CasesPage() {
         </div>
       </section>
 
-      {/* Case Detail Modal */}
-      <CaseDetailModal
-        selectedCase={selectedCase}
-        onClose={() => setSelectedCase(null)}
-        onConsult={() => {
-          setSelectedCase(null);
-          openConsultation();
-        }}
-      />
     </PageLayout>
   );
 }

@@ -50,6 +50,18 @@ export default function Footer() {
             >
               복구 사례
             </Link>
+            <Link
+              href="/blog"
+              className="text-slate-400 hover:text-slate-100 transition-colors"
+            >
+              블로그
+            </Link>
+            <Link
+              href="/faq"
+              className="text-slate-400 hover:text-slate-100 transition-colors"
+            >
+              FAQ
+            </Link>
             <button
               onClick={openConsultation}
               className="text-slate-400 hover:text-slate-100 transition-colors"
