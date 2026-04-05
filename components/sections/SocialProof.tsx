@@ -89,7 +89,12 @@ export default function SocialProof() {
   if (!currentMessage) return null;
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50 bg-[#0A192F]/90 backdrop-blur-lg border-b border-white/10">
+    <div
+      role="status"
+      aria-live="polite"
+      aria-label="실시간 서비스 현황"
+      className="fixed top-0 left-0 right-0 z-50 bg-[#0A192F]/90 backdrop-blur-lg border-b border-white/10"
+    >
       <div className="max-w-7xl mx-auto px-4 py-3">
         <AnimatePresence mode="wait">
           <motion.div

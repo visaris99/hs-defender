@@ -152,6 +152,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* Preconnect — 외부 리소스 연결 시간 단축 */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
+
         {/* Fonts */}
         <link
           rel="stylesheet"
@@ -176,6 +182,11 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
+        {/* Skip to Content — 키보드/스크린 리더 접근성 */}
+        <a href="#main-content" className="skip-to-content">
+          본문으로 바로가기
+        </a>
+
         {/* Google Tag Manager */}
         {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
 

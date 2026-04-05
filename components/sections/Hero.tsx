@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { trackCTAClick } from "@/lib/gtm";
 import { useModal } from "@/contexts/ModalContext";
 
@@ -17,6 +17,7 @@ export default function Hero() {
   const { openConsultation } = useModal();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [selectedVideo, setSelectedVideo] = useState(DEFAULT_VIDEO);
+  const prefersReducedMotion = useReducedMotion();
 
   // Select random video on client only (avoids hydration mismatch)
   useEffect(() => {
@@ -41,25 +42,34 @@ export default function Hero() {
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 100 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1, ease: "easeOut" }}
+      transition={{ duration: prefersReducedMotion ? 0 : 1, ease: "easeOut" }}
       className="relative min-h-screen flex items-center justify-center overflow-hidden px-4 py-20 md:py-32"
     >
       {/* Video Background — randomly selected from available videos */}
       <div className="absolute inset-0 overflow-hidden">
-        <video
-          ref={videoRef}
-          key={selectedVideo}
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/image/hero_poster.jpg"
-          className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src={selectedVideo} type="video/mp4" />
-        </video>
+        {prefersReducedMotion ? (
+          <img
+            src="/image/hero_poster.jpg"
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        ) : (
+          <video
+            ref={videoRef}
+            key={selectedVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            poster="/image/hero_poster.jpg"
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            <source src={selectedVideo} type="video/mp4" />
+          </video>
+        )}
 
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0A192F]/70 via-[#0A192F]/50 to-[#0A192F]" />

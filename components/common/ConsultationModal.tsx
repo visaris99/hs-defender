@@ -147,6 +147,9 @@ export default function ConsultationModal() {
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
         >
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="consultation-modal-title"
             initial={{ scale: 0.9, opacity: 0, y: 20 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -157,7 +160,7 @@ export default function ConsultationModal() {
             {/* Modal Header */}
             <div className="p-6 border-b border-white/10 flex items-center justify-between">
               <div>
-                <h2 className="text-xl font-extrabold text-slate-100">
+                <h2 id="consultation-modal-title" className="text-xl font-extrabold text-slate-100">
                   <span className="gradient-text">무료 상담</span> 신청
                 </h2>
                 <p className="text-slate-400 text-sm mt-1">
@@ -166,9 +169,10 @@ export default function ConsultationModal() {
               </div>
               <button
                 onClick={closeConsultation}
+                aria-label="모달 닫기"
                 className="text-slate-400 hover:text-slate-100 transition-colors p-2 hover:bg-white/5 rounded-xl"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>

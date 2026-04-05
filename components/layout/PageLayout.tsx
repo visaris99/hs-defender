@@ -1,10 +1,18 @@
 "use client";
 
 import { ReactNode } from "react";
-import SocialProof from "@/components/sections/SocialProof";
+import dynamic from "next/dynamic";
 import Footer from "@/components/sections/Footer";
-import StickyCTA from "@/components/common/StickyCTA";
 import ScrollToTop from "@/components/common/ScrollToTop";
+
+// 비-크리티컬 컴포넌트 동적 임포트 — 초기 번들 사이즈 절감
+const SocialProof = dynamic(
+  () => import("@/components/sections/SocialProof"),
+  { ssr: true }
+);
+const StickyCTA = dynamic(() => import("@/components/common/StickyCTA"), {
+  ssr: false,
+});
 
 interface PageLayoutProps {
   children: ReactNode;
@@ -20,7 +28,7 @@ export default function PageLayout({
   showFooter = true,
 }: PageLayoutProps) {
   return (
-    <main className="relative">
+    <main id="main-content" className="relative">
       {/* Scroll to top on page load */}
       <ScrollToTop />
 

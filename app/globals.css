@@ -131,3 +131,56 @@ p {
   background: rgba(245, 158, 11, 0.3);
   color: #fff;
 }
+
+/* Focus Visible — 키보드 네비게이션 시 포커스 링 */
+:focus-visible {
+  outline: 2px solid rgba(245, 158, 11, 0.8);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 마우스 클릭 시 포커스 링 숨김 */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Reduced Motion — 접근성: 움직임 민감 사용자 */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .breathing-btn {
+    animation: none;
+  }
+}
+
+/* Skip to Content — 스크린 리더 / 키보드 사용자용 */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--color-gold-500);
+  color: #000;
+  font-weight: 700;
+  border-radius: 0 0 12px 12px;
+  transition: top 0.2s;
+}
+
+.skip-to-content:focus {
+  top: 0;
+}
+
+/* Touch Action — 모바일 300ms 딜레이 제거 */
+a,
+button,
+[role="button"] {
+  touch-action: manipulation;
+}

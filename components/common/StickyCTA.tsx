@@ -50,12 +50,12 @@ export default function StickyCTA() {
           transition={{ duration: 0.3 }}
           className="fixed bottom-0 left-0 right-0 z-40 p-4 pb-safe"
         >
-          <div className="max-w-xl mx-auto">
+          <nav aria-label="빠른 상담" className="max-w-xl mx-auto">
             <div className="bg-white/5 backdrop-blur-lg border border-white/10 shadow-xl rounded-2xl p-4 flex items-center gap-3">
-              {/* Consultation Button */}
+              {/* Consultation Button — 최소 44px 터치 타겟 */}
               <button
                 onClick={handleConsultationClick}
-                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold px-4 py-3 rounded-xl transition-all text-sm shadow-lg shadow-amber-500/20"
+                className="flex-1 flex items-center justify-center gap-2 bg-gradient-to-r from-amber-400 to-amber-600 hover:from-amber-500 hover:to-amber-700 text-black font-bold px-4 py-3 min-h-[44px] rounded-xl transition-all text-sm shadow-lg shadow-amber-500/20 cursor-pointer"
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -63,10 +63,11 @@ export default function StickyCTA() {
                 복구 작업 신청
               </button>
 
-              {/* Kakao Button */}
+              {/* Kakao Button — 최소 44px 터치 타겟 */}
               <button
                 onClick={handleKakaoClick}
-                className="flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-4 py-3 rounded-xl hover:bg-[#FDD835] transition-all text-sm whitespace-nowrap shadow-lg"
+                aria-label="카카오톡으로 상담하기"
+                className="flex items-center gap-2 bg-[#FEE500] text-[#3C1E1E] font-bold px-4 py-3 min-h-[44px] rounded-xl hover:bg-[#FDD835] transition-all text-sm whitespace-nowrap shadow-lg cursor-pointer"
               >
                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                   <path d="M12 3C6.477 3 2 6.463 2 10.692c0 2.625 1.75 4.923 4.363 6.254-.147.53-.61 2.175-.65 2.396-.05.278.102.274.215.2.088-.058 1.407-.958 2.026-1.382.671.1 1.365.15 2.046.15 5.523 0 10-3.463 10-7.618C20 6.463 15.523 3 12 3z" />
@@ -74,7 +75,7 @@ export default function StickyCTA() {
                 카카오톡
               </button>
             </div>
-          </div>
+          </nav>
         </motion.div>
       )}
     </AnimatePresence>

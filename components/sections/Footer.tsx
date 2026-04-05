@@ -37,7 +37,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="flex flex-wrap justify-center gap-6 md:gap-8 mb-10 text-sm">
+          <nav aria-label="푸터 네비게이션" className="flex flex-wrap justify-center gap-6 md:gap-8 mb-10 text-sm">
             <Link
               href="/about"
               className="text-slate-400 hover:text-slate-100 transition-colors"
@@ -76,7 +76,7 @@ export default function Footer() {
             >
               카카오톡 상담
             </a>
-          </div>
+          </nav>
 
           {/* Divider */}
           <div className="border-t border-white/10 pt-10">

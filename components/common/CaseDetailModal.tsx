@@ -30,6 +30,9 @@ export default function CaseDetailModal({
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
         >
           <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="case-modal-title"
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}
@@ -43,12 +46,13 @@ export default function CaseDetailModal({
                   <span className="text-amber-500 text-sm font-display font-semibold">
                     복구 작업 완료
                   </span>
-                  <h3 className="text-xl font-semibold mt-1 text-slate-100">
+                  <h3 id="case-modal-title" className="text-xl font-semibold mt-1 text-slate-100">
                     {selectedCase.title}
                   </h3>
                 </div>
                 <button
                   onClick={onClose}
+                  aria-label="모달 닫기"
                   className="text-slate-400 hover:text-slate-100 transition-colors p-1"
                 >
                   <CloseIcon className="w-6 h-6" />
