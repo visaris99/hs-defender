@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import { ModalProvider } from "@/contexts/ModalContext";
 import ConsultationModal from "@/components/common/ConsultationModal";
 import "./globals.css";
@@ -138,6 +138,9 @@ export default function RootLayout({
 
         {/* Google Tag Manager */}
         {GTM_ID && <GoogleTagManager gtmId={GTM_ID} />}
+
+        {/* Google Analytics 4 */}
+        <GoogleAnalytics gaId="G-MHC85LP84T" />
 
         <ModalProvider>
           {children}
