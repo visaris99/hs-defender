@@ -66,7 +66,7 @@ export const metadata: Metadata = {
   verification: {
     google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "D10_24NxJYCBFAWHfoO4zCjQaJlpimHLxS78l31kOpU",
     other: {
-      "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || "ab98d6fd150baab88e72e9d39c083df92d58ca9b",
+      "naver-site-verification": process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION || "da74505721c23e795fcf99287a70885d84d7617d",
     },
   },
   alternates: {
