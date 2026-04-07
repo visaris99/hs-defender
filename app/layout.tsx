@@ -99,6 +99,14 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* RSS Feed */}
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="해외선물 손실복구 디펜더"
+          href="/rss.xml"
+        />
+
         {/* Preconnect — 외부 리소스 연결 시간 단축 */}
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
