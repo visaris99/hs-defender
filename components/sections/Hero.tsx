@@ -84,7 +84,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="text-slate-400 text-sm md:text-base mb-6 tracking-widest uppercase"
         >
-          해외선물 손실복구 전문
+          대여업체 · 미니업체 손실복구 전문
         </motion.p>
 
         {/* Main headline */}
@@ -94,11 +94,9 @@ export default function Hero() {
           transition={{ duration: 1, delay: 1.1 }}
           className="text-3xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-8"
         >
-          해외선물 손실,
+          대여업체에서 잃은 돈,
           <br />
-          <span className="gradient-text">더 이상 고객님 돈으로</span>
-          <br />
-          막지 마세요.
+          <span className="gradient-text">아직 포기하지 마세요.</span>
         </motion.h1>
 
         {/* Description */}
@@ -108,10 +106,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 1.5 }}
           className="text-slate-300 text-base md:text-lg mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-          담보금 <span className="gold-highlight">100% 회사 부담</span>,
-          전담 작업자의 <span className="gold-highlight">1:1 케어</span>로
+          대여업체 · 미니업체 손실,
+          <span className="gold-highlight"> 담보금 100% 회사 부담</span>으로
           <br className="hidden md:block" />
-          안전하게 손실을 복구해드립니다.
+          전담 작업자가 <span className="gold-highlight">1:1 케어</span>로 복구해드립니다.
         </motion.p>
 
         {/* CTA Button */}

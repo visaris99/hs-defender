@@ -75,9 +75,9 @@ export default function AboutPage() {
               왜 <span className="gradient-text">디펜더</span>인가요?
             </h1>
             <p className="text-slate-400 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
-              고객님의 안전한 손실 복구를 위해 최적의 조건을 제공합니다.
+              대여업체 · 미니업체에서 발생한 손실,
               <br className="hidden md:block" />
-              디펜더만의 차별화된 서비스를 확인해보세요.
+              디펜더만의 차별화된 조건으로 복구해드립니다.
             </p>
           </motion.div>
         </div>
