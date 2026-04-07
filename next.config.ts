@@ -1,18 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // www → non-www 리다이렉트 (SEO 중복 URL 방지)
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [{ type: "host", value: "www.xn--2e0b15inqbc0l9kc43jpwao6fp0lmq9adie.site" }],
-        destination:
-          "https://xn--2e0b15inqbc0l9kc43jpwao6fp0lmq9adie.site/:path*",
-        permanent: true,
-      },
-    ];
-  },
+  // www → non-www 리다이렉트는 호스팅(Vercel 도메인 설정)에서 처리
+  // Next.js에서 중복 설정하면 리다이렉트 루프 발생
   // 보안 + 캐시 헤더
   async headers() {
     return [
